@@ -1,0 +1,17 @@
+---
+# tasks file for webservers
+- name: Install NGINX
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Start and enable NGINX
+  service:
+    name: nginx
+    state: started
+    enabled: yes
+- name: coping static content to servers
+  copy:
+    src: index.html
+    dest: /var/www/html/index.html

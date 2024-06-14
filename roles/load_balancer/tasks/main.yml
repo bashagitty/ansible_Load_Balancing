@@ -1,0 +1,39 @@
+---
+- name: Install NGINX
+  apt:
+    name: nginx
+    state: present
+    update_cache: yes
+
+- name: Copy load balancer configuration
+  template:
+    src: load_balancer.conf.j2
+    dest: /etc/nginx/sites-available/load_balancer.conf
+
+- name: Enable load balancer configuration
+  file:
+    src: /etc/nginx/sites-available/load_balancer.conf
+    dest: /etc/nginx/sites-enabled/load_balancer.conf
+    state: link
+
+- name: Remove default configuration
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Test NGINX configuration
+  command: nginx -t
+  register: nginx_test
+  ignore_errors: yes
+
+- name: Fail if NGINX configuration is invalid
+  fail:
+    msg: "NGINX configuration test failed"
+  when: nginx_test.rc != 0
+
+- name: Restart NGINX
+  service:
+    name: nginx
+    state: restarted
+  notify:
+    - restart nginx

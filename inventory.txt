@@ -1,0 +1,8 @@
+[webserver12]
+#webserver1 ansible_host= 192.168.122.200 
+#webserver2 ansible_host= 192.168.122.44 
+192.168.122.200 ansible_user=basha ansible_ssh_pass=basha@123 ansible_become_pass=basha@123
+192.168.122.44 ansible_user=basha ansible_ssh_pass=basha@123 ansible_become_pass=basha@123
+[loadbalancing]
+192.168.122.243 ansible_user=basha ansible_ssh_pass=basha@123 ansible_become_pass=basha@123
+#lb  ansible_host= 192.168.122.243 

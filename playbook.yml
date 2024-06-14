@@ -1,0 +1,12 @@
+---
+- name: Hosting a Web application using Nginx
+  hosts: webserver12
+  become: yes
+  roles:
+    - webservers
+
+- name: Configuring Loadbalancing
+  hosts: loadbalancing
+  become: yes
+  roles:
+    - load_balancer
